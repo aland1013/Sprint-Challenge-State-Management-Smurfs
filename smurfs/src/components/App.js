@@ -20,6 +20,16 @@ const App = () => {
       .catch((err) => console.log('err', err));
   };
 
+  const deleteSmurf = (id) => {
+    axios
+      .delete(`http://localhost:3333/smurfs/${id}`)
+      .then((res) => {
+        console.log('res from deleteSmurf', res.data);
+        setSmurfs(res.data);
+      })
+      .catch((err) => console.log('err', err));
+  };
+
   useEffect(() => {
     setIsFetching(true);
 
@@ -38,7 +48,9 @@ const App = () => {
 
   return (
     <div className='App'>
-      <SmurfsContext.Provider value={{ smurfs, isFetching, addSmurf }}>
+      <SmurfsContext.Provider
+        value={{ smurfs, isFetching, addSmurf, deleteSmurf }}
+      >
         <SmurfForm />
         <Smurfs />
       </SmurfsContext.Provider>
