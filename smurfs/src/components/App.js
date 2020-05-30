@@ -15,7 +15,6 @@ const App = () => {
       axios
         .put(`http://localhost:3333/smurfs/${smurf.id}`, smurf)
         .then((res) => {
-          console.log('res from addSmurf', res.data);
           setSmurfs(res.data);
         })
         .catch((err) => console.log('err', err));
@@ -23,7 +22,6 @@ const App = () => {
       axios
         .post('http://localhost:3333/smurfs', smurf)
         .then((res) => {
-          console.log('res from addSmurf', res.data);
           setSmurfs(res.data);
         })
         .catch((err) => console.log('err', err));
@@ -34,7 +32,6 @@ const App = () => {
     axios
       .delete(`http://localhost:3333/smurfs/${id}`)
       .then((res) => {
-        console.log('res from deleteSmurf', res.data);
         setSmurfs(res.data);
       })
       .catch((err) => console.log('err', err));
@@ -48,16 +45,14 @@ const App = () => {
     axios
       .get('http://localhost:3333/smurfs')
       .then((res) => {
-        console.log('res', res.data);
         setSmurfs(res.data);
       })
-      .catch((err) => {
-        console.log('err', err);
-      });
+      .catch((err) => console.log('err', err));
   }, []);
 
   return (
     <div className='App'>
+      <h1>Sprint Challenge: State Management - Smurfs</h1>
       <SmurfsContext.Provider
         value={{ smurfs, smurfToEdit, addSmurf, deleteSmurf, editSmurf }}
       >

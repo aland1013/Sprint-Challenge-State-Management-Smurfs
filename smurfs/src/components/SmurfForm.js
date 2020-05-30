@@ -1,6 +1,46 @@
 import React, { useContext, useState, useEffect } from 'react';
 import * as yup from 'yup';
+import styled from 'styled-components';
 import { SmurfsContext } from '../contexts/SmurfsContext';
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  max-width: 300px;
+  margin: 0 auto;
+`;
+
+const Label = styled.label`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 10px 0;
+  font-size: 1.4rem;
+`;
+
+const Input = styled.input`
+  width: 100%;
+  margin: 5px 0 0;
+  display: block;
+  width: 100%;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  padding: 10px;
+  transition: all 0.3s;
+  font-size: 1.4rem;
+  letter-spacing: 0.5px;
+  background-color: white;
+`;
+
+const Button = styled.button`
+  margin: auto;
+  height: 50px;
+  width: 150px;
+  border-radius: 5px;
+  font-size: 18px;
+  background-color: #88ccff;
+`;
 
 const SmurfForm = () => {
   const { smurfToEdit, addSmurf } = useContext(SmurfsContext);
@@ -71,39 +111,38 @@ const SmurfForm = () => {
 
   return (
     <>
-      <h2>Smurf Form</h2>
-      <form onSubmit={formSubmit}>
-        <label htmlFor='name'>
+      <Form onSubmit={formSubmit}>
+        <Label htmlFor='name'>
           Name:
-          <input
+          <Input
             type='text'
             name='name'
             onChange={inputChange}
-            value={formState.name}
+            value={formState.name || ''}
           />
-        </label>
-        <label htmlFor='age'>
+        </Label>
+        <Label htmlFor='age'>
           Age:
-          <input
+          <Input
             type='number'
             name='age'
             onChange={inputChange}
-            value={formState.age}
+            value={formState.age || ''}
           />
-        </label>
-        <label htmlFor='height'>
+        </Label>
+        <Label htmlFor='height'>
           Height:
-          <input
+          <Input
             type='text'
             name='height'
             onChange={inputChange}
-            value={formState.height}
+            value={formState.height || ''}
           />
-        </label>
-        <button disabled={isButtonDisabled} type='submit'>
+        </Label>
+        <Button disabled={isButtonDisabled} type='submit'>
           add smurf
-        </button>
-      </form>
+        </Button>
+      </Form>
     </>
   );
 };
