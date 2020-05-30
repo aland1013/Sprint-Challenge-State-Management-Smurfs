@@ -1,10 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react';
 import * as yup from 'yup';
-import axios from 'axios';
 import { SmurfsContext } from '../contexts/SmurfsContext';
 
 const SmurfForm = () => {
-  const { addSmurf } = useContext(SmurfsContext);
+  const { smurfToEdit, addSmurf } = useContext(SmurfsContext);
 
   const [formState, setFormState] = useState({
     name: '',
@@ -42,6 +41,12 @@ const SmurfForm = () => {
       setIsButtonDisabled(!valid);
     });
   }, [formState]);
+
+  useEffect(() => {
+    if (smurfToEdit) {
+      setFormState(smurfToEdit);
+    }
+  }, [smurfToEdit]);
 
   const formSubmit = (e) => {
     e.preventDefault();

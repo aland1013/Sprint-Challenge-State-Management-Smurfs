@@ -8,16 +8,26 @@ import './App.css';
 
 const App = () => {
   const [smurfs, setSmurfs] = useState([]);
-  const [isFetching, setIsFetching] = useState(false);
+  const [smurfToEdit, setSmurfToEdit] = useState({});
 
   const addSmurf = (smurf) => {
-    axios
-      .post('http://localhost:3333/smurfs', smurf)
-      .then((res) => {
-        console.log('res from addSmurf', res.data);
-        setSmurfs(res.data);
-      })
-      .catch((err) => console.log('err', err));
+    if (smurf.id) {
+      axios
+        .put(`http://localhost:3333/smurfs/${smurf.id}`, smurf)
+        .then((res) => {
+          console.log('res from addSmurf', res.data);
+          setSmurfs(res.data);
+        })
+        .catch((err) => console.log('err', err));
+    } else {
+      axios
+        .post('http://localhost:3333/smurfs', smurf)
+        .then((res) => {
+          console.log('res from addSmurf', res.data);
+          setSmurfs(res.data);
+        })
+        .catch((err) => console.log('err', err));
+    }
   };
 
   const deleteSmurf = (id) => {
@@ -30,26 +40,26 @@ const App = () => {
       .catch((err) => console.log('err', err));
   };
 
-  useEffect(() => {
-    setIsFetching(true);
+  const editSmurf = (smurf) => {
+    setSmurfToEdit(smurf);
+  };
 
+  useEffect(() => {
     axios
       .get('http://localhost:3333/smurfs')
       .then((res) => {
         console.log('res', res.data);
         setSmurfs(res.data);
-        setIsFetching(false);
       })
       .catch((err) => {
         console.log('err', err);
-        setIsFetching(false);
       });
   }, []);
 
   return (
     <div className='App'>
       <SmurfsContext.Provider
-        value={{ smurfs, isFetching, addSmurf, deleteSmurf }}
+        value={{ smurfs, smurfToEdit, addSmurf, deleteSmurf, editSmurf }}
       >
         <SmurfForm />
         <Smurfs />
