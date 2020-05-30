@@ -4,6 +4,7 @@ import Smurf from './Smurf';
 
 const Smurfs = () => {
   const { smurfs } = useContext(SmurfsContext);
+  console.log('smurfs', smurfs);
 
   return (
     <>

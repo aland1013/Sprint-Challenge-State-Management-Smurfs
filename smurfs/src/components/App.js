@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { SmurfsContext } from '../contexts/SmurfsContext';
+import SmurfForm from '../components/SmurfForm';
 import Smurfs from '../components/Smurfs';
 
 import './App.css';
@@ -8,6 +9,16 @@ import './App.css';
 const App = () => {
   const [smurfs, setSmurfs] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
+
+  const addSmurf = (smurf) => {
+    axios
+      .post('http://localhost:3333/smurfs', smurf)
+      .then((res) => {
+        console.log('res from addSmurf', res.data);
+        setSmurfs(res.data);
+      })
+      .catch((err) => console.log('err', err));
+  };
 
   useEffect(() => {
     setIsFetching(true);
@@ -27,7 +38,8 @@ const App = () => {
 
   return (
     <div className='App'>
-      <SmurfsContext.Provider value={{ smurfs, isFetching }}>
+      <SmurfsContext.Provider value={{ smurfs, isFetching, addSmurf }}>
+        <SmurfForm />
         <Smurfs />
       </SmurfsContext.Provider>
     </div>
